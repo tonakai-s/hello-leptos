@@ -1,9 +1,11 @@
+use hello_leptos::{components::progress::ProgressBar, spread::SpreadingExample};
+
 use leptos::{
     component,
     mount::mount_to_body,
     prelude::{
-        signal, ClassAttribute, ElementChild, Get, InnerHtmlAttribute, OnAttribute, StyleAttribute,
-        Write,
+        signal, AddAnyAttr, ClassAttribute, ElementChild, Get, InnerHtmlAttribute, OnAttribute,
+        StyleAttribute, Write,
     },
     view, IntoView,
 };
@@ -51,11 +53,14 @@ fn App() -> impl IntoView {
 
         <p>"Double count: " {double_count}</p>
 
-        // pass a signal to a attribute make it also update reactively
-        <progress max="50" value=double_count />
+        // props to components are passed like HTML attributes
+        <ProgressBar value=count style:background-color="aqua" class:foo=true />
+        <ProgressBar max=5 value=double_count />
 
         // inner_html wipes out all the childrens of the element.
         // the inserted HTML is not escaped, so is vulnerable to XSS
         <div inner_html=html></div>
+
+        <SpreadingExample />
     }
 }
