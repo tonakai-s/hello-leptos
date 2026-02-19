@@ -1,7 +1,10 @@
 use leptos::{
     component,
     mount::mount_to_body,
-    prelude::{signal, ClassAttribute, ElementChild, Get, OnAttribute, StyleAttribute, Write},
+    prelude::{
+        signal, ClassAttribute, ElementChild, Get, InnerHtmlAttribute, OnAttribute, StyleAttribute,
+        Write,
+    },
     view, IntoView,
 };
 
@@ -12,6 +15,12 @@ fn main() {
 #[component]
 fn App() -> impl IntoView {
     let (count, set_count) = signal(0);
+
+    // derived signal: this calc run everytime it's called. Since this is cheap, is ok.
+    // Memo is a feature that solves this to expensive calculations.
+    let double_count = move || count.get() * 2;
+
+    let html = "<p>This HTML will be injected</p>";
 
     view! {
         // {count} is a signal
@@ -28,7 +37,7 @@ fn App() -> impl IntoView {
             class:red=move || count.get() % 2 == 1
 
             // style attr
-            style="position: absolute"
+            style="position: relative"
             // style also can have dynamic props
             style:left=move || format!("{}px", count.get() + 100)
             style:background-color=move || format!("rgb({}, {}, 100)", count.get(), 100)
@@ -39,9 +48,14 @@ fn App() -> impl IntoView {
             "Click me: "
             {count}
         </button>
-        <p>"Double count: " {move || count.get() * 2}</p>
+
+        <p>"Double count: " {double_count}</p>
 
         // pass a signal to a attribute make it also update reactively
-        <progress max="50" value=count />
+        <progress max="50" value=double_count />
+
+        // inner_html wipes out all the childrens of the element.
+        // the inserted HTML is not escaped, so is vulnerable to XSS
+        <div inner_html=html></div>
     }
 }
