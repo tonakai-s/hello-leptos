@@ -1,4 +1,10 @@
-use hello_leptos::{components::progress::ProgressBar, spread::SpreadingExample};
+use hello_leptos::{
+    components::{
+        iter::{DynamicIter, StaticIter},
+        progress::ProgressBar,
+    },
+    spread::SpreadingExample,
+};
 
 use leptos::{
     component,
@@ -62,5 +68,8 @@ fn App() -> impl IntoView {
         <div inner_html=html></div>
 
         <SpreadingExample />
+
+        <StaticIter />
+        <DynamicIter />
     }
 }
