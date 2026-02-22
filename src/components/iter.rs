@@ -21,7 +21,7 @@ pub fn StaticIter() -> impl IntoView {
         <p>"Generating from static iterators"</p>
         // This will only plot the values as 12345
         <p>{values.clone()}</p>
-        // collest_view get a Vec<View>
+        // collect_view get a Vec<View>
         <ul>{values.clone().into_iter().map(|v| view! { <li>{v}</li> }).collect_view()}</ul>
 
         {signals
