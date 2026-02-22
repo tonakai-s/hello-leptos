@@ -3,6 +3,7 @@ use hello_leptos::{
         iter::{DynamicIter, StaticIter},
         progress::ProgressBar,
     },
+    control_flow::{LeptosShow, Match, NativeIf},
     spread::SpreadingExample,
 };
 
@@ -71,5 +72,9 @@ fn App() -> impl IntoView {
 
         <StaticIter />
         <DynamicIter />
+        <hr />
+        <NativeIf />
+        <Match />
+        <LeptosShow />
     }
 }
